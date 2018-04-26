@@ -1,0 +1,47 @@
+body {
+	background: #f7f7f7;
+}
+
+.box-you, .box-computer {
+	background-color: #ccc;
+	border: 1px solid black;
+	padding: 10px 0px;
+}
+
+.header {
+	background-color: #ccc;
+	border: 1px solid black;
+	margin-bottom: 25px;
+}
+
+.winner {
+	background-color: #14cc48;
+	font-weight: bold;
+}
+
+footer {
+    bottom: 0px;
+    width: 100%;
+    background-color: bisque;
+	padding: 10px 0px;
+	margin-top: 35px;
+}
+
+#box-win {
+	background: lightblue;
+}
+
+#box-computer {
+	background-color: #e55252;
+}
+
+.box-victory {
+	border: 1px solid grey;
+	background-color: lightgreen;
+	padding: 10px 0px;
+}
+
+#misterious-letter {
+	font-weight: bold;
+	font-size: 25px;
+}

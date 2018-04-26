@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Psychic Game</title>
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="header">
+                        <h1>Psychic Game - Good Luck!</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-6 text-center">
+                    <div id="box-win" class="box-you">
+                        <h2>Wins</h2>
+                        <p id="user-wins">0</p>
+                    </div>
+                </div>
+                <div class="col-6 text-center">
+                    <div id="box-computer" class="box-computer">
+                        <h2>Losses</h2>
+                        <p id="user-losses">0</p>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-4 text-center">
+                    <div class="box-you">
+                        <h2>Guesses</h2>
+                        <p id="guess-number">0</p>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <div class="box-you">
+                        <h2>Guesses Left</h2>
+                        <p id="guess-left">9</p>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <div class="box-computer">
+                        <h2>Guesses so far</h2>
+                        <p id="guess-so-far">---</p>
+                    </div>
+                </div>
+                &nbsp;
+            </div>
+        </div>
+        <div class="container invisible" id="box-victory">
+            <div class="row">
+                <div class="col-12">
+                    <div class="box-victory text-center">
+                        <h2>You won!!</h2>
+                        <p id="text-letter-guessed">The guessed letter was <span id="misterious-letter"></span></p>
+                        <img src="http://24.media.tumblr.com/d515e122fced9b56264694e530589d78/tumblr_mugn4hjqVO1qlycobo1_500.gif" alt="You won!" class="img-fluid">
+                        <br><br>
+                        <button class="btn btn-primary" onclick="location.reload();">Start a New game</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="author text-center">
+                        <h3>Copyright &copy; 2018 - Made by Gustavo Gibo</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="assets/js/game.js"></script>
+</body>
+</html>
