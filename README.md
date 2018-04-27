@@ -1,4 +1,4 @@
-# Psychic-Game
+# Hangman-Game
 
 Fourth Homework Assignment - Hangman Game
 
