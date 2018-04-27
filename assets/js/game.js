@@ -271,30 +271,6 @@ var wins = 0;
 var losses = 0;
 var guesses = 0;
 var guessesLeft = 9;
-var guessList = [];
-var printGuessList = "";
-
-var divWin = document.getElementById("user-wins");
-var divLoss = document.getElementById("user-losses");
-var divGuess = document.getElementById("guess-number");
-var divGuessLeft = document.getElementById("guess-left");
-var divGuessSoFar = document.getElementById("guess-so-far");
-
-var instructions = "Instructions"+
-                    "\n"+
-                    "1 - The computer will choose randomly a letter"+
-                    "\n"+
-                    "2 - Type the letter that you think the computer chose."+
-                    "\n"+
-                    "3 - If you guess the wrong letter, you'll miss a guess. You have only 9 guesses."+
-                    "\n"+
-                    "4 - If you miss all your guesses, game over! You can start a new game though. Just press Ok as the new alert appears."+
-                    "If you win, something good awaits for you. Good Luck!"+
-                    "\n"+
-                    "Hint: Use headphones!";
-
-
-//Alert(instructions);
 
 gameContent.words.resetGame();
 
