@@ -15,6 +15,12 @@ Fourth Homework Assignment - Hangman Game
 * Open index.html
 * Follow the rules and good luck!
 
+### Link to the game
+
+You can access the game without downloading any file by just clicking on the link below:
+
+* [Word Guess Game](https://gustavogibo.github.io/Word-Guess-Game/)
+
 ### File Tree Structure
 
 - __Word-Guess-Game__
