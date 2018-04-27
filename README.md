@@ -1,8 +1,5 @@
 # Psychic-Game
 
-
-# Basic Portfolio
-
 Fourth Homework Assignment - Hangman Game
 
 ## Built With
@@ -18,8 +15,6 @@ Fourth Homework Assignment - Hangman Game
 * Open index.html
 * Follow the rules and good luck!
 
-
-
 ### File Tree Structure
 
 - __Word-Guess-Game__
@@ -34,7 +29,6 @@ Fourth Homework Assignment - Hangman Game
       - [ff7.mp3](Word-Guess-Game/assets/sounds/ff7.mp3)
       - [loss.mp3](Word-Guess-Game/assets/sounds/loss.mp3)
     - __js__
-      - [Untitled-1](Word-Guess-Game/assets/js/Untitled-1)
       - [game.js](Word-Guess-Game/assets/js/game.js)
   - [index.html](Word-Guess-Game/index.html)
 
