@@ -92,6 +92,36 @@ var gameContent = {
         wordSplit:[],
         wordProgress:[],
         lettersGuessed: [],
+        resetGame: function() {
+
+            gameContent.guesses = 0;
+            gameContent.guessesLeft = 9;
+            this.lettersGuessed.length = 0;
+    
+            //Randomly choose an music genre
+            // gameContent.words.wordChosen = gameContent.wordsArray[Math.floor(Math.random() * gameContent.wordsArray.length)];
+            this.wordChosen = gameContent.wordsArray[Math.floor(Math.random() * gameContent.wordsArray.length)];
+            // this.wordChosen = "eletronic";
+            //Transforming the word into Underscores
+            this.wordSplit = this.wordChosen.split("");
+    
+            changeDivContent("guess-so-far", "---");
+            changeDivContent("guess-number", 0);
+            changeDivContent("guess-left", 9);
+    
+            //Changing the div#word-split content to the Underscore characters
+            for (let i = 0; i < this.wordChosen.length; i++) {
+                this.wordProgress[i] = "_";
+            }
+    
+            // Changing the div for the new word with the underscores instead of the letters
+            changeDivContent("word-split", displayWordSplit(1, this.wordProgress));
+
+            changeDivContent("guess-so-far", "---");
+    
+    
+    
+        },
         checkCorrectLetter: function(letter) {
             
             for (let count = 0; count < this.wordSplit.length; count++) {
@@ -110,12 +140,31 @@ var gameContent = {
                             if(this.checkRepeatedLetter(letter) == 0) {
 
                                 this.lettersGuessed.push(letter);
+
+                                // var audio = new Audio('assets/sounds/doh.mp3');
+                                // audio.play();
     
                             }
                             changeDivContent("guess-so-far", displayWordSplit(2, this.lettersGuessed));
                             changeDivContent("word-split", displayWordSplit(1, this.wordProgress));
                             changeDivContent("guess-number",gameContent.guesses);
                             changeDivContent("guess-left", gameContent.guessesLeft);
+
+                            position = this.wordProgress.indexOf("_");
+
+                            if(position == -1) {
+
+                                gameContent.wins++;
+                                changeDivContent("user-wins", gameContent.wins);
+                                changeDivContent("misterious-word", this.wordChosen);
+                                toggleDiv(1, "box-victory");
+                                var audio = new Audio('assets/sounds/ff7.mp3');
+                                audio.play();
+                                this.resetGame();
+
+                            }
+
+                            
 
                         }
 
@@ -124,30 +173,74 @@ var gameContent = {
                         this.lettersGuessed.push(letter);
                         gameContent.guesses++;
                         gameContent.guessesLeft--;
-                        changeDivContent("guess-so-far", displayWordSplit(2, this.lettersGuessed));
-                        changeDivContent("guess-number",gameContent.guesses);
-                        changeDivContent("guess-left", gameContent.guessesLeft);
 
-                        var audio = new Audio('assets/sounds/doh.mp3');
-                        audio.play();
+                        if (gameContent.guessesLeft == 0) {
+                            
+                            this.resetGame();
+
+                            losses++;
+                            changeDivContent("user-losses", losses);
+
+                            alert("Game over! Try again!");
+                            
+                            var audio = new Audio('assets/sounds/loss.mp3');
+                            audio.play();
+
+                            return 0;
+                            
+
+                        } else {
+
+                            changeDivContent("guess-so-far", displayWordSplit(2, this.lettersGuessed));
+                            changeDivContent("guess-number",gameContent.guesses);
+                            changeDivContent("guess-left", gameContent.guessesLeft);
+
+                            
+
+
+                        }
 
                     }
 
                 } else {
                     
-                    if(this.checkRepeatedLetter(letter) == 0) {
+                    if(count == this.wordSplit.length-1) {
 
-                        this.lettersGuessed.push(letter);
-                        gameContent.guesses++;
-                        gameContent.guessesLeft--;
+                        if(this.checkRepeatedLetter(letter) == 0) {
+
+                            this.lettersGuessed.push(letter);
+                            gameContent.guesses++;
+                            gameContent.guessesLeft--;
+
+                            if (gameContent.guessesLeft == 0) {
+                                
+                                this.resetGame();
+                                var audio = new Audio('assets/sounds/loss.mp3');
+                                audio.play();
+                                losses++;
+                                changeDivContent("user-losses", losses);
+                                alert("Game over! Try again!");
+
+
+                                
+                                return 0;
+    
+                            } else {
+
+                            // console.log('3');
+                            var audio = new Audio('assets/sounds/doh.mp3');
+                            audio.play();
+
+                        }
+                        changeDivContent("guess-so-far", displayWordSplit(2, this.lettersGuessed));
+                        changeDivContent("guess-number",gameContent.guesses);
+                        changeDivContent("guess-left", gameContent.guessesLeft);
 
                     }
-                    changeDivContent("guess-so-far", displayWordSplit(2, this.lettersGuessed));
-                    changeDivContent("guess-number",gameContent.guesses);
-                    changeDivContent("guess-left", gameContent.guessesLeft);
 
-                    var audio = new Audio('assets/sounds/doh.mp3');
-                    audio.play();
+                    }
+
+                    
 
                 }
                 
@@ -169,28 +262,6 @@ var gameContent = {
             }
 
         },
-    },
-    resetGame: function() {
-
-        guesses = 0;
-        guessesLeft = 9;
-
-        //Randomly choose an music genre
-        // gameContent.words.wordChosen = gameContent.wordsArray[Math.floor(Math.random() * gameContent.wordsArray.length)];
-        this.words.wordChosen = this.wordsArray[Math.floor(Math.random() * this.wordsArray.length)];
-        this.words.wordChosen = "eletronic";
-        //Transforming the word into Underscores
-        this.words.wordSplit = this.words.wordChosen.split("");
-
-        //Changing the div#word-split content to the Underscore characters
-        for (let i = 0; i < this.words.wordChosen.length; i++) {
-            this.words.wordProgress[i] = "_";
-        }
-
-        // Changing the div for the new word with the underscores instead of the letters
-        changeDivContent("word-split", displayWordSplit(1, gameContent.words.wordProgress));
-
-
     }
     
 };
@@ -225,7 +296,7 @@ var instructions = "Instructions"+
 
 //Alert(instructions);
 
-gameContent.resetGame();
+gameContent.words.resetGame();
 
 changeDivContent("word-split", displayWordSplit(1, gameContent.words.wordProgress));
 

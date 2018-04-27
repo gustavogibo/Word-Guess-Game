@@ -2,7 +2,7 @@ body {
 	background: #f7f7f7;
 }
 
-.box-you, .box-computer {
+.box-you, .box-computer, #box-word {
 	background-color: #ccc;
 	border: 1px solid black;
 	padding: 10px 0px;
