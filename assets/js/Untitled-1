@@ -1,0 +1,40 @@
+alert
+game starts
+word is chosen
+player chooses a letter
+    if is a letter then
+        if the letter is already been guessed then
+            don't count as a guess
+            do nothing
+        otherwise then
+            if guessed letter is in the word
+                fill the incomplete word array
+                add the letter to the guessed letter list
+                if incomplete word array is filled with correct letter then
+                    increment wins
+                    play song
+                    show the complete word
+                    style changing
+                    confirm window for a new game
+                    if user press yes
+                        reset guesses
+                        reset all the word arrays
+                        reset the html
+                        reset the style
+                        Choose a new word
+                endIf
+            otherwise then
+                add the letter to the guessed letter list
+                increment the guess number
+                decrement the remaining guesses
+                if player has no more guesses
+                    increment losses
+                    reset guesses
+                    reset all the word arrays
+                    Choose a new word
+                    clean all the html except for the losses
+                endIf
+            endIf
+        endIf
+    enfIf
+

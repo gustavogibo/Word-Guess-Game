@@ -23,11 +23,11 @@ function toggleDiv(statement, divName) {
 
     if(statement != 0) {
 
-        element.classList.remove("invisible");
+        element.classList.remove("d-none");
 
     } else {
 
-        element.classList.add("invisible");
+        element.classList.add("d-none");
 
     }
     
@@ -40,13 +40,160 @@ function changeDivContent(divName, content) {
     element.textContent = content;
 
 }
-/*
-    Using three native functions to generate my random letter
-    fromCharCode = Returns a string created from the specified sequence of UTF-16 code units.
-    math.floor = Returns the largest integer less than or equal to a given number.
-    math.random = Returns a floating-point, pseudo-random number in the range from 0 inclusive up to but not including 1
-*/
-var randomLetter = String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+
+function displayWordSplit(type, a) {
+
+    var result= "";
+
+    for (let i = 0; i < a.length; i++) {
+
+        if(type == 1) {
+
+            if(i != a.length-1) {
+
+                result+= a[i]+" ";
+    
+            } else {
+    
+                result+= a[i];
+    
+            }
+
+        } else {
+
+            if(i != a.length-1) {
+
+                result+= a[i]+", ";
+    
+            } else {
+    
+                result+= a[i];
+    
+            }
+        }
+
+        
+           
+    }
+
+    return result;
+
+}
+
+
+var gameContent = {
+    wordsArray: ["rock", "country","jazz","blues","eletronic","opera","pop","reggae","rap","funk","instrumental"],
+    wins: 0,
+    loses: 0,
+    guesses: 0,
+    guessesLeft: 9,
+    words: {
+        wordChosen: 0,
+        wordSplit:[],
+        wordProgress:[],
+        lettersGuessed: [],
+        checkCorrectLetter: function(letter) {
+            
+            for (let count = 0; count < this.wordSplit.length; count++) {
+                // const element = array[count];
+
+                var position = this.wordSplit.indexOf(letter);
+                
+                // If the letter is the same as is in the selected index on wordSplit and is not on wordProgress yet
+                if(this.wordSplit[count] == letter) {
+                    
+                    if(position != -1) {
+
+                        if(this.wordProgress[count] == "_") {
+
+                            this.wordProgress[count] = letter;
+                            if(this.checkRepeatedLetter(letter) == 0) {
+
+                                this.lettersGuessed.push(letter);
+    
+                            }
+                            changeDivContent("guess-so-far", displayWordSplit(2, this.lettersGuessed));
+                            changeDivContent("word-split", displayWordSplit(1, this.wordProgress));
+                            changeDivContent("guess-number",gameContent.guesses);
+                            changeDivContent("guess-left", gameContent.guessesLeft);
+
+                        }
+
+                    } else {
+                        
+                        this.lettersGuessed.push(letter);
+                        gameContent.guesses++;
+                        gameContent.guessesLeft--;
+                        changeDivContent("guess-so-far", displayWordSplit(2, this.lettersGuessed));
+                        changeDivContent("guess-number",gameContent.guesses);
+                        changeDivContent("guess-left", gameContent.guessesLeft);
+
+                        var audio = new Audio('assets/sounds/doh.mp3');
+                        audio.play();
+
+                    }
+
+                } else {
+                    
+                    if(this.checkRepeatedLetter(letter) == 0) {
+
+                        this.lettersGuessed.push(letter);
+                        gameContent.guesses++;
+                        gameContent.guessesLeft--;
+
+                    }
+                    changeDivContent("guess-so-far", displayWordSplit(2, this.lettersGuessed));
+                    changeDivContent("guess-number",gameContent.guesses);
+                    changeDivContent("guess-left", gameContent.guessesLeft);
+
+                    var audio = new Audio('assets/sounds/doh.mp3');
+                    audio.play();
+
+                }
+                
+            }
+            
+    
+        },
+        checkRepeatedLetter: function(letter) {
+            
+            var check = this.lettersGuessed.indexOf(letter);
+
+            if(check != -1) {
+
+                return 1;
+
+            } else {
+
+                return 0;
+            }
+
+        },
+    },
+    resetGame: function() {
+
+        guesses = 0;
+        guessesLeft = 9;
+
+        //Randomly choose an music genre
+        // gameContent.words.wordChosen = gameContent.wordsArray[Math.floor(Math.random() * gameContent.wordsArray.length)];
+        this.words.wordChosen = this.wordsArray[Math.floor(Math.random() * this.wordsArray.length)];
+        this.words.wordChosen = "eletronic";
+        //Transforming the word into Underscores
+        this.words.wordSplit = this.words.wordChosen.split("");
+
+        //Changing the div#word-split content to the Underscore characters
+        for (let i = 0; i < this.words.wordChosen.length; i++) {
+            this.words.wordProgress[i] = "_";
+        }
+
+        // Changing the div for the new word with the underscores instead of the letters
+        changeDivContent("word-split", displayWordSplit(1, gameContent.words.wordProgress));
+
+
+    }
+    
+};
 
 // Declaring Wins, Losses, Guesses and Actual Guesses
 var wins = 0;
@@ -76,7 +223,11 @@ var instructions = "Instructions"+
                     "Hint: Use headphones!";
 
 
-alert(instructions);
+//Alert(instructions);
+
+gameContent.resetGame();
+
+changeDivContent("word-split", displayWordSplit(1, gameContent.words.wordProgress));
 
 document.onkeyup = function(event) {
 
@@ -84,89 +235,8 @@ document.onkeyup = function(event) {
         userGuess = userGuess.toLowerCase();
 
     if (event.keyCode >= 65 && event.keyCode <= 90) {
-
-        // If the user guesses wrong
-        if(userGuess != randomLetter) {
-
-            guessesLeft--;
-            
-            // If user has no more guesses left
-            if (guessesLeft == 0) {
-
-                randomLetter = String.fromCharCode(Math.floor(Math.random() * 26) + 97);
-                losses++;
-                guesses = 0;
-                guessesLeft = 9;
-                guessList = [];
-
-                changeDivContent("user-losses", losses);
-                changeDivContent("guess-number", guesses);
-                changeDivContent("guess-left", guessesLeft);
-                changeDivContent("guess-so-far", "---");
-
-                alert("You lost! Try again =)");
-
-                // divLoss.textContent = losses;
-                // divGuess.textContent = guesses;
-                // divGuessLeft.textContent = guessesLeft;
-                // divGuessSoFar.textContent = "---";
-            
-            // Otherwise, increase the guess number, decrease the remaining guesses and increase the Guesses done so far
-            } else {
-
-                guesses++;
-                guessList.push(userGuess);
-
-                changeDivContent("guess-number", guesses);
-                changeDivContent("guess-left", guessesLeft);
-
-                // divGuess.textContent = guesses;
-                // divGuessLeft.textContent = guessesLeft;
-
-                printGuessList = "";
-                for (let i = 0; i < guessList.length; i++) {
-
-                    if (i == guessList.length-1) {
-                    
-                        printGuessList+=" "+guessList[i];
-                    
-                    } else {
-                        
-                        printGuessList+=" "+guessList[i]+",";
-                    }
-                }
-                changeDivContent("guess-so-far", printGuessList);
-                // divGuessSoFar.textContent = printGuessList;
-            }
-
-            
-
-        } else {
-
-            wins++;
-            guesses = 0;
-            guessesLeft = 9;
-            guessList = [];
-
-            changeDivContent("user-wins", wins);
-            changeDivContent("guess-number", guesses);
-            changeDivContent("guess-left", guessesLeft);
-            changeDivContent("guess-so-far", "---");
-
-            // divWin.textContent = wins;
-            // divGuess.textContent = guesses;
-            // divGuessLeft.textContent = guessesLeft;
-            // divGuessSoFar.textContent = "---";
-
-            toggleDiv(1, "box-victory");
-            changeDivContent("misterious-letter", randomLetter);
-
-            var audio = new Audio('ff7.mp3');
-            audio.play();
-
-            randomLetter = String.fromCharCode(Math.floor(Math.random() * 26) + 97);
-
-        }
+        
+        gameContent.words.checkCorrectLetter(userGuess);
 
     }
 
